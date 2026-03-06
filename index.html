@@ -166,6 +166,134 @@ body{
   to{transform:scale(1); opacity:1;}
 }
 
+/*-landing overlay-*/
+.landing-overlay{
+position: fixed;
+inset: 0;                          /* stretches it across the whole screen */
+backdrop-filter: blur(6px);        /* blurs the background behind the popup */
+display: none;                     /* hidden until JS shows it */
+justify-content: center;
+align-items: center;    
+}
+
+
+/* ── Landing Popup Box ── */
+.landing-popup {
+  background: white;
+  width: 340px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(245, 124, 44, 0.25);
+  animation: popupIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Coloured header band */
+.landing-popup .popup-header {
+  background: linear-gradient(135deg, #F57C2C, #ff7839);
+  padding: 30px 25px 25px;
+  text-align: center;
+  position: relative;
+}
+
+.landing-popup .popup-header img.popup-logo {
+  width: 130px;
+  margin-bottom: 12px;
+  /* ✏️ Replace src with your logo path */
+}
+
+/* Placeholder logo shown when no image */
+.logo-placeholder {
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+
+.landing-popup .popup-header h2 {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+  /* ✏️ REPLACE: Main headline */
+}
+
+.landing-popup .popup-header p {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem;
+  margin-top: 6px;
+  line-height: 1.5;
+  /* ✏️ REPLACE: Short subheadline */
+}
+
+/* Popup body */
+.landing-popup .popup-body {
+  padding: 24px 25px 28px;
+}
+
+/* Feature bullets */
+.features {
+  list-style: none;
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #444;
+}
+
+.features li .icon {
+  width: 32px;
+  height: 32px;
+  background: #fff3e8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+/* CTA Button */
+.btn-cta {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: #F57C2C;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-bottom: 10px;
+  /* ✏️ REPLACE: Button label */
+}
+
+.btn-cta:hover {
+  background: #e56f22;
+  transform: translateY(-1px);
+}
+
+/* Secondary link */
+.btn-secondary {
+  display: block;
+  text-align: center;
+  color: #aaa;
+  font-size: 0.82rem;
+  cursor: pointer;
+  /* ✏️ REPLACE: e.g. "Maybe later" or "Skip for now" */
+}
+
+.btn-secondary:hover { color: #F57C2C; }
+
 </style>
 </head>
 
@@ -183,6 +311,48 @@ body{
   </button>
 
 </div>
+
+<div class="landing-overlay" id="landingOverlay">
+  <div class="landing-popup">
+
+    <!-- Header -->
+    <div class="popup-header">
+
+      <!-- ✏️ OPTION A: use your logo image -->
+      <img src="img/whiteminituro.png" class="popup-logo" alt="MiniTuro">
+
+      <h2>Welcome to MiniTuro!</h2>
+      <p>Bite-sized videos & interactive games that make learning actually fun.</p>
+    </div>
+
+    <!-- Body -->
+    <div class="popup-body">
+
+      <!-- ✏️ Feature highlights — edit emoji + text, add/remove <li> as needed -->
+      <ul class="features">
+        <li>we provide:</li>
+        <li>
+          <span class="icon">⚡</span>
+          <span>fast, 30-second video lessons</span>
+        </li>
+        <li>
+          <span class="icon">⚔️</span>
+          <span>Lesson Boss Fights</span>
+        </li>
+        <li>
+          <span class="icon">👆</span>
+          <span>Few-button navigation</span>
+        </li>
+      </ul>
+
+      <!-- ✏️ Primary CTA — change onclick to wherever you want to send the user -->
+      <button class="btn-cta" onclick="closeLanding()">
+        Get Started 
+      </button>
+    </div>
+  </div>
+</div>
+
 
 <!-- Popup Sign In -->
 <div class="overlay" id="popupOverlay">
@@ -215,6 +385,14 @@ body{
 </div>
 
 <script>
+ window.addEventListener('load', () => {
+    document.getElementById('landingOverlay').style.display = 'flex';
+  });
+
+  function closeLanding() {
+    document.getElementById('landingOverlay').style.display = 'none';
+  }
+
 
 function openPopup(){
   document.getElementById("popupOverlay").style.display = "flex";
