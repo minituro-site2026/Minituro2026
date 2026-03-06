@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiniTuro Shorts</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #fff6e8;
+  display: flex;
+  justify-content: center;
+}
+
+/* Phone container */
+.phone {
+  width: 390px;
+  min-height: 100vh;
+  background: #fff6e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 80px; /* space for the fixed nav */
+  overflow-y: auto;
+}
+
+/* Logo */
+.logo {
+  width: 30%;
+  display: block;
+  margin: 20px auto;
+}
+
+/* Video wrapper */
+.video-wrapper {
+  position: relative;   /* ← remove absolute */
+  top: unset;
+  left: unset;
+  transform: none;
+  margin-top: 20px;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Caption */
+.caption {
+  position: relative;   /* ← remove absolute */
+  bottom: unset;
+  left: unset;
+  transform: none;
+  margin-top: 12px;
+}
+
+/* Buttons */
+.controls {
+  position: relative;   /* ← remove absolute */
+  bottom: unset;
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+button {
+  background:#ff8c3a;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-bottom: 10px;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Bottom nav */
+.nav {
+  position: fixed;
+  bottom: 0;
+  width: 390px;
+  height: 80px;
+  background: #ff8c3a;
+  display: flex;
+  align-items: center;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  font-size: 12px;
+}
+
+.nav-item {
+  flex: 1;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footercons {
+  width: 26px;
+  margin-bottom: 4px;
+}
+
+/* ================= MODAL ================= */
+
+.modal {
+  display: none;
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.6);
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.modal-content {
+  background: white;
+  width:85%;
+  border-radius:28px;
+  padding:30px 20px 25px;
+  text-align:center;
+  position:relative;
+}
+
+.modal-content img {
+  width:120px;
+  margin-bottom:15px;
+}
+
+.modal-content p {
+  color:#7a4b2f;
+  font-weight:500;
+  margin-bottom:20px;
+}
+
+.modal-buttons {
+  display:flex;
+  gap:15px;
+}
+
+.modal-buttons button {
+  flex:1;
+  padding:10px;
+  border-radius:14px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.review-btn {
+  background:#fdc017;
+  color:white;
+}
+
+.fight-btn {
+  background:#ff6122;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+  <img src="img/minituro.png" class="logo">
+
+  <div class="video-wrapper">
+    <video id="videoPlayer" autoplay loop controls>
+      <source src="img/videos/money1.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="caption" id="captionText">
+    💰Piso Coins & Bills
+  </div>
+
+  <div class="controls">
+    <button onclick="prevVideo()">Back</button>
+    <button onclick="nextVideo()">Next</button>
+  </div>
+
+  <!-- MODAL POPUP -->
+  <div class="modal" id="gameModal">
+    <div class="modal-content">
+      <img src="img/pisopigimg.png">
+      <p>Calculate addition and Subtraction to defeat PisoPig</p>
+      <div class="modal-buttons">
+        <button class="review-btn" onclick="closeModal()">Review</button>
+        <button class="fight-btn" onclick="window.location.href='pisopig.html'">Fight</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+  
+    <a href="home.html" class="nav-item">
+      <img src="img/home.png" class="footercons">
+      <span>Home</span>
+    </a>
+    <a href="info.html" class="nav-item">
+      <img src="img/info.png" class="footercons">
+      <span>Info</span>
+    </a>
+  </div>
+
+</div>
+
+<script>
+const videos = [
+  { url: "img/videos/money1.mp4", caption: "💰Piso Coins & Bills" },
+  { url: "img/videos/money2.mp4", caption: "💰Adding Money" },
+  { url: "img/videos/money3.mp4", caption: "💰Subtracting Money" },
+];
+
+let current = 0;
+
+const player = document.getElementById("videoPlayer");
+const caption = document.getElementById("captionText");
+const nextBtn = document.querySelector(".controls button:last-child");
+const modal = document.getElementById("gameModal");
+
+function updateVideo() {
+  player.src = videos[current].url;
+  caption.innerText = videos[current].caption;
+  player.play();
+
+  if (current === videos.length - 1) {
+    nextBtn.innerText = "Game🎮";
+  } else {
+    nextBtn.innerText = "Next";
+  }
+}
+
+function nextVideo() {
+  if (current === videos.length - 1) {
+    modal.style.display = "flex";  // SHOW POPUP
+  } else {
+    current++;
+    updateVideo();
+  }
+}
+
+function prevVideo() {
+  if (current > 0) {
+    current--;
+    updateVideo();
+  }
+}
+
+function closeModal() {
+  modal.style.display = "none";
+}
+</script>
+
+</body>
+</html>

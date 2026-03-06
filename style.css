@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+  font-family: "Arial Rounded MT Bold", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Phone frame */
+.phone {
+  width: 360px;
+  height: 720px;
+  background: #fff8ee;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+/* App content */
+.app {
+  height: 100%;
+  padding: 24px 20px;
+  text-align: center;
+}
+
+/* Logo section */
+.logo-section .logo {
+  width: 50px;
+  margin-bottom: 6px;
+}
+
+.logo-section h1 {
+  margin: 0;
+  color: #ff8a3d;
+  font-size: 28px;
+}
+
+.tagline {
+  font-size: 14px;
+  color: #ff8a3d;
+  margin-bottom: 0px;
+}
+
+/* Mascot */
+.mascot {
+  width: 120px;
+  margin: 10px 0 20px;
+}
+
+/* Question */
+.question {
+  color: #ff8a3d;
+    font-family: "Fredoka", sans-serif;
+  font-optical-sizing: auto;
+  font-style: thin;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.start-btn {
+width: 100%;
+padding: 14px;
+border: none;
+border-radius: 14px;
+background: #ff8a3d;
+color: white;
+font-size: 18px;
+font-weight: bold;
+cursor: pointer;
+}
+
+
+.start-btn:active {
+transform: scale(0.97);
+}
+
+.start-btn:hover {
+  background: #ffb37a; /* light orange */
+}
+.start-btn {
+  transition: background 0.2s ease;
+}

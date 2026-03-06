@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sir Piso Pig</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#fff5ea;
+    display:flex;
+    justify-content:center;
+}
+
+.app{
+    width:100%;
+    max-width:390px;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-bottom:90px;
+}
+
+/* Top */
+.logo{
+    width:110px;
+    margin-top:20px;
+}
+
+.balance{
+    font-weight:600;
+    margin-top:5px;
+}
+
+.character{
+    width:180px;
+    margin-top:10px;
+}
+
+.nameTag{
+    background:#f57c00;
+    color:white;
+    padding:8px 18px;
+    border-radius:20px;
+    font-weight:600;
+    margin-top:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.dialogue{
+    background:#fff;
+    width:85%;
+    padding:15px;
+    border-radius:20px;
+    margin-top:10px;
+    text-align:center;
+    min-height:70px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Calculator */
+.calculator{
+    margin-top:20px;
+    background:#ff7a00;
+    padding:15px;
+    border-radius:25px;
+    width:85%;
+    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+}
+
+.display{
+    background:#6b2e00;
+    color:white;
+    font-size:24px;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.keys{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+button{
+    border:none;
+    border-radius:12px;
+    padding:15px;
+    font-size:18px;
+    cursor:pointer;
+    font-family:'Poppins';
+}
+
+.num{ background:#ffa64d; }
+.action{ background:#ff944d; }
+.enter{
+    background:#e65100;
+    color:white;
+    grid-column: span 2;
+}
+
+.hearts{
+    margin-top:15px;
+    font-size:26px;
+}
+
+/* Footer */
+.footer{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    max-width:390px;
+    background:#ff8a3d;
+    display:flex;
+    justify-content:space-around;
+    padding:10px 0;
+}
+
+.footer a{
+    text-align:center;
+    text-decoration:none;
+    color:white;
+    font-size:12px;
+}
+
+.footer img{
+    width:28px;
+    display:block;
+    margin:0 auto 4px;
+}
+
+/* Popup */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.popup{
+    background:white;
+    width:85%;
+    max-width:320px;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.popup h2{
+    margin-top:0;
+}
+
+.popup button{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    font-weight:600;
+    background:#f57c00;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<img src="img/minituro.png" class="logo">
+
+<div id="balance" class="balance" style="display:none;">
+Sir Piso Pig's Balance: ₱100
+</div>
+
+<img src="img/pisopig.gif" class="character">
+
+<div class="nameTag">Sir Piso Pig</div>
+
+<div class="dialogue" id="dialogue">Loading...</div>
+
+<div class="calculator">
+    <div class="display" id="display">₱ </div>
+    <div class="keys">
+        <button class="num" onclick="press(7)">7</button>
+        <button class="num" onclick="press(8)">8</button>
+        <button class="num" onclick="press(9)">9</button>
+        <button class="action" onclick="backspace()">⌫</button>
+
+        <button class="num" onclick="press(4)">4</button>
+        <button class="num" onclick="press(5)">5</button>
+        <button class="num" onclick="press(6)">6</button>
+        <button class="num" onclick="press(0)">0</button>
+
+        <button class="num" onclick="press(1)">1</button>
+        <button class="num" onclick="press(2)">2</button>
+        <button class="num" onclick="press(3)">3</button>
+        <button class="enter" onclick="submit()">Enter</button>
+    </div>
+</div>
+
+<div class="hearts" id="hearts">❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ (lives left)</div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    
+    <a href="home.html">
+        <img src="img/home.png">Home
+    </a>
+    <a href="info.html">
+        <img src="img/info.png">Info
+    </a>
+</div>
+
+<!-- Popup -->
+<div class="overlay" id="overlay">
+    <div class="popup" id="popupContent"></div>
+</div>
+
+<script>
+let balance = 100;
+let lives = 10;
+let index = 0;
+let input = "";
+
+const questions = [
+{type:"add", text:"I want 2 breads. ₱10 each. How much will I pay?", answer:20},
+{type:"add", text:"I want 5 coffee. ₱6 each. How much will I pay?", answer:30},
+{type:"add", text:"I want 8 water. ₱7 each. How much will I pay?", answer:56},
+{type:"add", text:"I want 9 soda. ₱8 each. How much will I pay?", answer:72},
+{type:"add", text:"I want 10 chips. ₱9 each. How much will I pay?", answer:90},
+{type:"sub", text:"I have ₱100. I bought bread worth ₱15. How much do I have left?", answer:85},
+{type:"sub", text:"I bought coffee worth ₱20. How much do I have left?", answer:65},
+{type:"sub", text:"I bought water worth ₱18. How much do I have left?", answer:47},
+{type:"sub", text:"I bought soda worth ₱22. How much do I have left?", answer:25},
+{type:"sub", text:"I bought chips worth ₱25. How much do I have left?", answer:0}
+];
+
+function loadQuestion(){
+    let q = questions[index];
+    document.getElementById("dialogue").innerText = q.text;
+
+    if(q.type==="sub"){
+        document.getElementById("balance").style.display="block";
+        document.getElementById("balance").innerText=
+        "Sir Piso Pig's Balance: ₱"+balance;
+    } else {
+        document.getElementById("balance").style.display="none";
+    }
+
+    input="";
+    updateDisplay();
+}
+
+function press(n){
+    input+=n;
+    updateDisplay();
+}
+
+function backspace(){
+    input=input.slice(0,-1);
+    updateDisplay();
+}
+
+function updateDisplay(){
+    document.getElementById("display").innerText="₱ "+input;
+}
+
+function submit(){
+    if(parseInt(input)===questions[index].answer){
+        if(questions[index].type==="sub"){
+            balance=questions[index].answer;
+        }
+        index++;
+        if(index>=questions.length){
+            showBossDefeated();
+        } else {
+            loadQuestion();
+        }
+    } else {
+        lives--;
+        document.getElementById("hearts").innerText="❤️ ".repeat(lives);
+        if(lives<=0){
+            showGameOver();
+        }
+    }
+}
+
+function showGameOver(){
+    document.getElementById("overlay").style.display="flex";
+    document.getElementById("popupContent").innerHTML=`
+        <h2>💀 Game Over!</h2>
+        <button onclick="location.reload()">🔁 Retry</button>
+        <button onclick="location.href='money.html'">🪙 Review Coins & Bills</button>
+    `;
+}
+
+function showBossDefeated(){
+    document.getElementById("overlay").style.display="flex";
+    document.getElementById("popupContent").innerHTML=`
+        <h2>🎉 Boss Defeated!</h2>
+        <button onclick="location.reload()">🔄 Play Again</button>
+        <button onclick="location.href='home.html'">🏠 Home Page</button>
+    `;
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

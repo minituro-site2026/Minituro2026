@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MiniTuro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #fff6e8;
+  display: flex;
+  justify-content: center;
+}
+
+/* Phone container */
+.phone {
+  width: 390px;
+  height: 100vh;
+  background: #fff6e8;
+  position: relative;
+  overflow-y: auto;   /* changed from overflow: hidden */
+  border-radius: 0px;
+  padding-bottom: 100px;  /* add this so grid clears the nav */
+}
+
+/* Logo */
+.logo {
+  width: 30%;
+  display: block;
+  margin: 20px auto 0;
+}
+
+.tagline {
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 10px 0 20px;
+  color: #ff8c3a;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  padding: 10px 25px;
+  text-align: center;
+}
+
+.item h3 {
+  color: #ff8c3a;
+  margin-bottom: 0;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 20px;
+}
+
+.circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 6px solid #ffb26b;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition: 0.3s ease all;
+}
+
+.circle:hover {
+  border-color: #ff8c3a;
+}
+
+.circle:active {
+  transform: scale(0.97);
+}
+
+.icons {
+  width: 90px;
+  height: auto;
+}
+
+.bites {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Remove link underline */
+a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* Bottom nav */
+/* Bottom nav */
+.nav {
+  position: fixed;   /* changed from absolute */
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);  /* keeps it centered inside the 390px phone */
+  width: 390px;
+  height: 80px;
+  background: #ff8c3a;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+/* Each footer item */
+.nav-item {
+  flex: 1;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+.footercons {
+  width: 26px;
+  height: auto;
+  margin-bottom: 4px;
+}
+
+.back-link a {
+  display: block;
+  text-align: center;
+  margin-left: 10px;
+  margin-top: 20px;
+  color: #eb7f04;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+
+</style>
+</head>
+
+<body>
+<div class="phone">
+
+  <div class="header">
+    <img src="img/minituro.png" class="logo" alt="MiniTuro Logo">
+    <p class="tagline">Tap a Lesson to Start the Fun!</p>
+  </div>
+
+  <div class="grid">
+
+    <div class="item">
+      <h3>Fractions</h3>
+      <a href="fractions.html">
+        <div class="circle">
+          <img src="img/burger.gif" class="icons">
+        </div>
+      </a>
+      <div class="bites">4 bites</div>
+    </div>
+
+    <div class="item">
+      <h3>Coins & Bills</h3>
+      <a href="money.html">
+        <div class="circle">
+          <img src="img/money.gif" class="icons">
+        </div>
+      </a>
+      <div class="bites">6 bites</div>
+    </div>
+
+    <div class="item">
+      <h3>Turns & Direction</h3>
+      <a href="turn.html">
+        <div class="circle">
+          <img src="img/rotate.gif" class="icons">
+        </div>
+      </a>
+      <div class="bites">3 bites</div>
+    </div>
+
+    <div class="item">
+      <h3>Time</h3>
+      <a href="time.html">
+        <div class="circle">
+          <img src="img/time.gif" class="icons">
+        </div>
+      </a>
+      <div class="bites">5 bites</div>
+    </div>
+
+  </div>
+
+  <span class="back-link"><a href="index.html">Back to login</a></span>
+
+ <div class="nav">
+
+  
+  <a href="home.html" class="nav-item">
+    <img src="img/home.png" class="footercons">
+    <span>Home</span>
+  </a>
+
+  <a href="info.html" class="nav-item">
+    <img src="img/info.png" class="footercons">
+    <span>Info</span>
+  </a>
+
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniTuro Intro</title>
+
+
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    
+    body {
+      margin: 0;
+      background: #fff9ed;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Phone container */
+    .phone {
+      width: 375px;
+      height: 667px;
+      background: #fff9ed;
+      border-radius: 30px;
+      padding: 24px;
+      position: relative;
+    }
+    
+
+    /* Logo */
+    .logo {
+      width: 40%;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    /* Mascot */
+    .mascot {
+      width: 160px;
+      display: block;
+      margin: 0 auto 40px;
+    }
+
+    /* Bubble wrapper */
+    .bubble-wrapper {
+      position: relative;
+    }
+
+    /* Name tag */
+    .name-tag {
+      background: #ff8a00;
+      color: white;
+      padding: 6px 16px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: bold;
+      position: relative;
+      top: -2px;
+      left: 10px;
+    }
+
+    /* Speech bubble */
+    .speech-bubble {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      min-height: 110px;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .speech-bubble p {
+      margin: 0;
+      font-size: 15px;
+      color: #444;
+    }
+    
+
+    /* Next button */
+    .next-btn {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 26px;
+      color: #ff8a00;
+      cursor: pointer;
+    }
+
+    .next-btn:active {
+      transform: scale(0.9);
+    }
+
+    .back-link a {
+  display: block;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 200px;
+  color: #eb7f04;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+
+
+  </style>
+</head>
+
+<body>
+
+  <div class="phone">
+
+    <!-- Logo -->
+    <img src="img/brandlogo.png" class="logo" alt="MiniTuro Logo">
+
+    <!-- Mascot -->
+    <img src="img/bitsyneutral.gif" class="mascot" alt="Bitsy">
+
+    <!-- Dialogue -->
+    <div class="bubble-wrapper">
+      <span class="name-tag">Bitsy</span>
+
+      <div class="speech-bubble">
+        <p id="dialogue"></p>
+        <button class="next-btn" onclick="nextText()">➜</button>
+      </div>
+    </div>
+    <span class="back-link"><a href="index.html">Back to login</a></span>
+  </div>
+
+  <script>
+    const dialogues = [
+      "Welcome to MiniTuro!",
+      "I am Bitsy, your bite sized companion :)",
+      "I have prepared short form lessons and games for you :D",
+      "have fun!"
+      
+    ];
+
+    let line = 0;
+    let char = 0;
+    let typing = false;
+    const speed = 35;
+
+    const textEl = document.getElementById("dialogue");
+
+    function typeWriter() {
+      typing = true;
+
+      if (char < dialogues[line].length) {
+        textEl.textContent += dialogues[line].charAt(char);
+        char++;
+        setTimeout(typeWriter, speed);
+      } else {
+        typing = false;
+      }
+    }
+
+    function nextText() {
+      // Skip typing if still typing
+      if (typing) {
+        textEl.textContent = dialogues[line];
+        char = dialogues[line].length;
+        typing = false;
+        return;
+      }
+
+      line++;
+
+      if (line < dialogues.length) {
+        textEl.textContent = "";
+        char = 0;
+        typeWriter();
+      } else {
+        // After last dialogue
+        window.location.href = "home.html";
+      }
+    }
+
+    // Start first line
+    typeWriter();
+  </script>
+
+</body>
+</html>

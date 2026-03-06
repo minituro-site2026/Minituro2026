@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MiniTuro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#fff9ed;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* Phone Container */
+.phone{
+  width:390px;
+  height:844px;
+  background:#fff9ed;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:30px 25px;
+  position:relative;
+}
+
+/* Logo */
+.logo{
+  width:160px;
+  margin-top:20px;
+}
+
+/* Bitsy */
+.bitsy{
+  width:220px;
+  margin:60px 0 40px 0;
+}
+
+/* Greeting Text */
+.greeting{
+  font-size:22px;
+  font-weight:700;
+  color:#F57C2C;
+  margin-bottom:30px;
+  text-align:center;
+}
+
+/* Buttons */
+.btn-main{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  font-size:20px;
+  font-weight:600;
+  cursor:pointer;
+  margin-bottom:18px;
+  transition:0.3s ease;
+}
+
+.kid{
+  background:#ee9520;
+  color:white;
+}
+
+.adult{
+  background:#ff7839;
+  color:white;
+}
+
+/* Popup Overlay */
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.45);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+/* Popup Sign In Box */
+.popup-box{
+  background:white;
+  width:330px;
+  padding:30px 25px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  animation:fadeIn 0.3s ease;
+}
+
+.form-title{
+  text-align:center;
+  margin-bottom:20px;
+  color:#F57C2C;
+}
+
+/* Input Styling */
+.input-group{
+  position:relative;
+  margin-bottom:20px;
+}
+
+.input-group i{
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#F57C2C;
+}
+
+.input-group input{
+  width:100%;
+  padding:12px 12px 12px 35px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  outline:none;
+}
+
+.input-group label{
+  display:none;
+}
+
+/* Sign In Button */
+.btn-submit{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#F57C2C;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.btn-submit:hover{
+  background:#e56f22;
+}
+
+.close-btn{
+  text-align:center;
+  margin-top:15px;
+  font-size:14px;
+  color:#888;
+  cursor:pointer;
+}
+
+@keyframes fadeIn{
+  from{transform:scale(0.9); opacity:0;}
+  to{transform:scale(1); opacity:1;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+  <img src="img/brandlogo.png" class="logo">
+  <img src="img/bitsyneutral.gif" class="bitsy">
+  <div class="greeting">Hello! Who popped in?</div>
+
+  <button class="btn-main kid" onclick="openPopup()">🧒Kid</button>
+  <button class="btn-main adult" onclick="location.href='intro.html'">
+  🧑Adult
+  </button>
+
+</div>
+
+<!-- Popup Sign In -->
+<div class="overlay" id="popupOverlay">
+  <div class="popup-box">
+
+    <h1 class="form-title">Parent Sign In</h1>
+
+    <p style="font-size:14px; text-align:center; margin-bottom:20px; color:#555;">
+      For a safe learning experience, please sign in as a parent or guardian first.
+    </p>
+
+    <form method="get" action="intro.html">
+      
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" name="email" placeholder="Email" required>
+      </div>
+
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+
+      <input type="submit" class="btn-submit" value="Sign In">
+    </form>
+
+    <div class="close-btn" onclick="closePopup()">Cancel</div>
+
+  </div>
+</div>
+
+<script>
+
+function openPopup(){
+  document.getElementById("popupOverlay").style.display = "flex";
+}
+
+function closePopup(){
+  document.getElementById("popupOverlay").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>

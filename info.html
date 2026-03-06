@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>About Us – Minituro</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B2B;
+    --cream: #FFF8EE;
+    --text-dark: #2D1B00;
+    --text-mid: #5C3D1A;
+    --card-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-dark);
+    background: var(--orange);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  .section-orange {
+    background: var(--orange);
+    padding: 56px 28px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-orange::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+
+  .section-orange::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  .logo-badge {
+    display: inline-block;
+    background: white;
+    color: var(--orange);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+
+  .section-orange h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.6rem;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-orange p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.7;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-cream {
+    background: var(--cream);
+    padding: 52px 24px 56px;
+  }
+
+  .section-cream h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--orange);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    border-left: 5px solid var(--orange);
+  }
+
+  .card:last-child { margin-bottom: 0; }
+
+  .card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--orange), #ffb347);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(255,107,43,0.35);
+  }
+
+  .card-body h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+
+  .card-body p {
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  .audience-card {
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 24px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+
+  .audience-card:last-child { margin-bottom: 0; }
+
+  .aud-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    flex-shrink: 0;
+  }
+
+  .audience-card h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 6px;
+  }
+
+  .audience-card p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: var(--card-shadow);
+    text-decoration: none;
+    color: var(--text-dark);
+  }
+
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--orange), #ffb347);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .contact-label {
+    font-size: 0.78rem;
+    color: #aaa;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .contact-value {
+    font-size: 0.97rem;
+    font-weight: 800;
+    color: var(--text-dark);
+  }
+
+  .wave-divider {
+    display: block;
+    width: 100%;
+    line-height: 0;
+    overflow: hidden;
+  }
+
+  .wave-divider svg { display: block; width: 100%; }
+
+  /* ---- FOOTER (matches Tick Tock Wizard) ---- */
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    height: 80px;
+    background: #ff8c3a;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index: 100;
+  }
+
+  .footer a {
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    opacity: 0.75;
+  }
+
+  .footer a.active { opacity: 1; }
+
+  .footer .nav-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  .footer-spacer { height: 100px; }
+
+  .footer img{width:28px;margin-bottom:4px;}
+
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-orange h1 { animation: fadeUp 0.6s ease both; }
+  .section-orange p  { animation: fadeUp 0.6s 0.15s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ABOUT US -->
+<section class="section-orange">
+  <div class="logo-badge">🌟 Minituro</div>
+  <h1>About Us</h1>
+  <p>Minituro is dedicated to reshaping education through modern technology and interactive, engaging experiences. We combine playfulness and structure to empower young learners.</p>
+</section>
+
+<!-- WAVE orange to cream -->
+<div class="wave-divider">
+  <svg viewBox="0 0 430 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 C100,40 330,40 430,0 L430,40 L0,40 Z" fill="#FFF8EE"/>
+  </svg>
+</div>
+
+<!-- WHY CHOOSE US -->
+<section class="section-cream">
+  <h2>Why Choose Us? ✨</h2>
+
+  <div class="card">
+    <div class="card-icon">🎬</div>
+    <div class="card-body">
+      <h3>Bite-Sized Reels</h3>
+      <p>Minituro shortens your lessons into a short form video that is easy to digest.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-icon">🎮</div>
+    <div class="card-body">
+      <h3>Interactive Learning</h3>
+      <p>Engage attention spans using fast and fun multimedia techniques.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-icon">🌱</div>
+    <div class="card-body">
+      <h3>Designed for Mindful Consumption</h3>
+      <p>Minituro uses short, guided videos in limited amounts to help children learn without developing screen dependency.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE cream to orange -->
+<div class="wave-divider" style="background:#FFF8EE;">
+  <svg viewBox="0 0 430 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C100,0 330,0 430,40 L430,0 L0,0 Z" fill="#FF6B2B"/>
+  </svg>
+</div>
+
+<!-- TARGET AUDIENCE -->
+<section class="section-orange" style="padding-top:40px;">
+  <h2 style="font-family:'Fredoka One',cursive;font-size:2rem;color:white;margin-bottom:28px;">Target Audience 🎯</h2>
+
+  <div class="audience-card">
+    <div class="aud-icon">🧒</div>
+    <div>
+      <h3>Primary Audience</h3>
+      <p>Minituro is tailor-made for Grade 1 students, fostering a love for learning through interactive games and lessons built just for young minds.</p>
+    </div>
+  </div>
+
+  <div class="audience-card">
+    <div class="aud-icon">👩‍🏫</div>
+    <div>
+      <h3>Secondary Audience</h3>
+      <p>Insights from teachers, web developers/designers, multimedia artists, parents, and curriculum developers can significantly contribute to the improvement of MiniTuro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE orange to cream -->
+<div class="wave-divider" style="background:#FF6B2B;">
+  <svg viewBox="0 0 430 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 C100,40 330,40 430,0 L430,40 L0,40 Z" fill="#FFF8EE"/>
+  </svg>
+</div>
+
+<!-- CONTACT -->
+<section class="section-cream" style="padding-top:40px;">
+  <h2>Contact Us 💌</h2>
+
+  <a href="tel:09776943319" class="contact-item">
+    <div class="contact-icon">📞</div>
+    <div>
+      <div class="contact-label">Phone</div>
+      <div class="contact-value">09776943319</div>
+    </div>
+  </a>
+
+  <a href="mailto:202201253@iacademy.edu.ph" class="contact-item">
+    <div class="contact-icon">✉️</div>
+    <div>
+      <div class="contact-label">Email</div>
+      <div class="contact-value">202201253@iacademy.edu.ph</div>
+    </div>
+  </a>
+</section>
+
+<!-- Spacer so content clears fixed footer -->
+<div class="footer-spacer"></div>
+
+<!-- FOOTER -->
+<div class="footer">
+  
+  <a href="home.html">
+    <div class="nav-icon"><img src="img/home.png"></div>
+    Home
+  </a>
+  <a href="info.html" class="active">
+    <div class="nav-icon"><img src="img/info.png"></div>
+    Info
+  </a>
+</div>
+
+</body>
+</html>

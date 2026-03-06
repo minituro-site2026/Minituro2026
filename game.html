@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hot Sauce Fractions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f4a764;
+  display:flex;
+  justify-content:center;
+}
+
+/* PHONE CONTAINER */
+.phone{
+  width:390px;
+  height:100vh;
+  background:#f4a764;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* LOGO */
+.logo-container{
+  margin-top:20px;
+}
+
+.logo{
+  width:75px;
+  background:#fff5ea;
+  padding:8px;
+  border-radius:18px;
+}
+
+/* CARD SECTION */
+.card-wrapper{
+  position:relative;
+  margin-top:80px;
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
+.boss-img{
+  position:absolute;
+  top:-70px;
+  width:140px;
+}
+
+.card{
+  background:white;
+  width:85%;
+  border-radius:28px;
+  padding:90px 20px 30px 20px;
+  text-align:center;
+}
+
+.card p{
+  color:#7a4b2f;
+  font-weight:500;
+  margin-bottom:25px;
+}
+
+/* BUTTONS */
+.button-group{
+  display:flex;
+  gap:15px;
+}
+
+.btn{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  font-weight:600;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.back{
+  background:#fdc017;
+  color:white;
+}
+
+.fight{
+  background:#ff6122;
+  color:white;
+}
+
+.btn:active{
+  transform:scale(0.95);
+}
+
+/* BITSY CHAT */
+.chat-container{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:auto;
+  margin-bottom:100px; /* space for footer */
+  padding:0 20px;
+}
+
+.bitsy{
+  width:80px;
+}
+
+.chat-bubble{
+  background:white;
+  padding:15px 18px;
+  border-radius:20px;
+  position:relative;
+  font-size:13px;
+  flex:1;
+}
+
+.chat-label{
+  position:absolute;
+  top:-10px;
+  left:15px;
+  background:#ff8a38;
+  color:white;
+  font-size:11px;
+  padding:3px 10px;
+  border-radius:12px;
+  font-weight:600;
+}
+
+/* FOOTER */
+.nav{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:80px;
+  background:#ff8a38;
+  display:flex;
+}
+
+.nav-item{
+  flex:1;
+  text-decoration:none;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+}
+
+.nav-item img{
+  width:22px;
+  margin-bottom:5px;
+}
+
+.nav-item:active{
+  transform:scale(0.95);
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+  <!-- Logo -->
+  <div class="logo-container">
+    <img src="img/minituro.png" class="logo">
+  </div>
+
+  <!-- Boss Card -->
+  <div class="card-wrapper">
+    <img src="img/happysauce.png" class="boss-img">
+    <div class="card">
+      <p>Are you ready to fight Hot Sauce Fractions?</p>
+      <div class="button-group">
+        <button class="btn back" onclick="history.back()">Back</button>
+        <button class="btn fight" onclick="window.location.href='boss.html'">Fight</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bitsy Chat -->
+  <div class="chat-container">
+    <img src="img/bitsytip.png" class="bitsy">
+    <div class="chat-bubble">
+      <div class="chat-label">Bitsy</div>
+      place a short tip here
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="nav">
+    <a href="download.html" class="nav-item">
+      <img src="img/download.png">
+      Download
+    </a>
+
+    <a href="index.html" class="nav-item">
+      <img src="img/home.png">
+      Home
+    </a>
+
+    <a href="info.html" class="nav-item">
+      <img src="img/info.png">
+      Info
+    </a>
+  </div>
+
+</div>
+
+</body>
+</html>
