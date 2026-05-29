@@ -30,7 +30,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 80px; /* space for the fixed nav */
+  padding-bottom: 80px;
   overflow-y: auto;
 }
 
@@ -43,32 +43,52 @@ body {
 
 /* Video wrapper */
 .video-wrapper {
-  position: relative;   /* ← remove absolute */
-  top: unset;
-  left: unset;
-  transform: none;
+  position: relative;
   margin-top: 20px;
+  width: 100%;
 }
 
 .video-wrapper video {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
+}
+
+/* Answer buttons overlay */
+#answerBox {
+  position: sticky;
+  bottom: -220px;
+  width: 100%;
+  display: none;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap; /* THIS is important */
+}
+
+/* 2 buttons = side by side */
+.quiz-btn {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  background: #ff8c3a;
+  color: white;
+  border: none;
+  font-weight: 700;
+}
+
+/* 4 buttons = grid look */
+#answerBox .quiz-btn {
+  flex: 1 1 40%; /* auto grid */
+  max-width: 140px;
 }
 
 /* Caption */
 .caption {
-  position: relative;   /* ← remove absolute */
-  bottom: unset;
-  left: unset;
-  transform: none;
   margin-top: 12px;
 }
 
-/* Buttons */
+/* Controls */
 .controls {
-  position: relative;   /* ← remove absolute */
-  bottom: unset;
   width: 100%;
   margin-top: 16px;
   display: flex;
@@ -81,15 +101,11 @@ button {
   border: none;
   color: white;
   padding: 6px 12px;
+  margin-bottom: 10px;
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
-  margin-bottom: 10px;
-}
-
-button:active {
-  transform: scale(0.95);
+  position: sticky;
 }
 
 /* Bottom nav */
@@ -101,8 +117,6 @@ button:active {
   background: #ff8c3a;
   display: flex;
   align-items: center;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
   font-size: 12px;
 }
 
@@ -121,8 +135,7 @@ button:active {
   margin-bottom: 4px;
 }
 
-/* ================= MODAL ================= */
-
+/* Modal */
 .modal {
   display: none;
   position: absolute;
@@ -140,44 +153,28 @@ button:active {
   background: white;
   width:85%;
   border-radius:28px;
-  padding:30px 20px 25px;
+  padding:30px;
   text-align:center;
-  position:relative;
-}
-
-.modal-content img {
-  width:120px;
-  margin-bottom:15px;
-}
-
-.modal-content p {
-  color:#7a4b2f;
-  font-weight:500;
-  margin-bottom:20px;
 }
 
 .modal-buttons {
-  display:flex;
-  gap:15px;
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.modal-buttons button {
-  flex:1;
-  padding:10px;
-  border-radius:14px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.review-btn {
-  background:#fdc017;
-  color:white;
+.back-btn {
+  flex: 1;
+  background: #ccc;
+  color: black;
 }
 
 .fight-btn {
-  background:#ff6122;
-  color:white;
+  flex: 1;
+  background: #ff6122;
+  color: white;
 }
+
 </style>
 </head>
 
@@ -188,13 +185,17 @@ button:active {
   <img src="img/minituro.png" class="logo">
 
   <div class="video-wrapper">
-    <video id="videoPlayer" autoplay loop controls>
-      <source src="img/videos/money1.mp4" type="video/mp4">
+    <video id="videoPlayer" controls>
+      <source src="img/videos/V6_MP4_COINS&BILLS.mp4" type="video/mp4">
     </video>
+
+    <!-- ANSWER BUTTONS -->
+    <div id="answerBox">
+    </div>
   </div>
 
   <div class="caption" id="captionText">
-    💰Piso Coins & Bills
+    🪙 Philippine Peso
   </div>
 
   <div class="controls">
@@ -202,20 +203,19 @@ button:active {
     <button onclick="nextVideo()">Next</button>
   </div>
 
-  <!-- MODAL POPUP -->
+  <!-- MODAL -->
   <div class="modal" id="gameModal">
     <div class="modal-content">
-      <img src="img/pisopigimg.png">
-      <p>Calculate addition and Subtraction to defeat PisoPig</p>
-      <div class="modal-buttons">
-        <button class="review-btn" onclick="closeModal()">Review</button>
-        <button class="fight-btn" onclick="window.location.href='pisopig.html'">Fight</button>
-      </div>
-    </div>
+  <p>🎮 Are you ready for a challenge?</p>
+
+  <div class="modal-buttons">
+    <button class="back-btn" onclick="closeModal()">Back</button>
+    <button class="fight-btn" onclick="goToBoss()">I'm Ready!</button>
+  </div>
+</div>
   </div>
 
   <div class="nav">
-  
     <a href="home.html" class="nav-item">
       <img src="img/home.png" class="footercons">
       <span>Home</span>
@@ -229,50 +229,177 @@ button:active {
 </div>
 
 <script>
-const videos = [
-  { url: "img/videos/money1.mp4", caption: "💰Piso Coins & Bills" },
-  { url: "img/videos/money2.mp4", caption: "💰Adding Money" },
-  { url: "img/videos/money3.mp4", caption: "💰Subtracting Money" },
+
+const sequence = [
+  { type: "video", url: "img/videos/V6_MP4_COINS&BILLS.mp4", caption: "🪙 Philippine Peso" },
+
+  {
+  type: "quiz",
+  url: "img/videos/V7_MP4_QUIZ.mp4",
+  caption: "Watch and choose!",
+  options: [
+    { type: "text", value: "₱100 bill" },
+    { type: "text", value: "₱1000 bill" }
+  ],
+  correct: 0
+},
+
+  { type: "video", url: "img/videos/V8_MP4_ADDITION.mp4", caption: "🪙 Adding Money" },
+
+  { 
+    type: "quiz",
+    url: "img/videos/V9_MP4_QUIZ.mp4",
+    caption: "Watch and choose!",
+    options: [
+  { type: "text", value: "₱20" },
+  { type: "text", value: "₱40" },
+  {type: "text", value: "₱1"}
+  ],
+    correct: 1
+  },
+
+  { type: "video", url: "img/videos/V10_MP4_SUBTRACTION.mp4", caption: "🪙 Subtracting Money" },
+
+  { 
+    type: "quiz",
+    url: "img/videos/V11_MP4_QUIZ.mp4",
+    caption: "Watch and choose!",
+    options: [
+  { type: "text", value: "₱300" },
+  { type: "text", value: "₱0" },
+  {type: "text", value: "₱10"},
+  { type: "text", value: "₱200"}
+  ],
+    correct: 3
+  },
+
+  
 ];
 
 let current = 0;
 
 const player = document.getElementById("videoPlayer");
 const caption = document.getElementById("captionText");
-const nextBtn = document.querySelector(".controls button:last-child");
+const answerBox = document.getElementById("answerBox");
+
+const opt0 = document.getElementById("opt0");
+const opt1 = document.getElementById("opt1");
+
 const modal = document.getElementById("gameModal");
 
-function updateVideo() {
-  player.src = videos[current].url;
-  caption.innerText = videos[current].caption;
-  player.play();
+function updateScreen() {
+  const item = sequence[current];
 
-  if (current === videos.length - 1) {
-    nextBtn.innerText = "Game🎮";
+  player.src = item.url;
+  caption.innerText = item.caption;
+
+  // ✅ ADD THIS HERE
+  if (item.type === "video") {
+    player.play();   // autoplay lessons
   } else {
-    nextBtn.innerText = "Next";
+    player.pause();  // pause quizzes
+  }
+
+  if (item.type === "quiz") {
+    answerBox.style.display = "flex";
+    renderAnswers(item.options);
+  } else {
+    answerBox.style.display = "none";
+  }
+}
+
+function answer(choice) {
+  const item = sequence[current];
+
+  if (choice === item.correct) {
+    alert("Correct! 🎉");
+
+    if (current === sequence.length - 1) {
+      modal.style.display = "flex";
+      return;
+    }
+
+    current++;
+    updateScreen();
+  } else {
+    alert("Try again! ❌");
   }
 }
 
 function nextVideo() {
-  if (current === videos.length - 1) {
-    modal.style.display = "flex";  // SHOW POPUP
-  } else {
+  const item = sequence[current];
+
+  if (item.type === "quiz") {
+    alert("Answer the question first! 🧠");
+    return;
+  }
+
+  if (current < sequence.length - 1) {
     current++;
-    updateVideo();
+    updateScreen();
+  } else {
+    modal.style.display = "flex";
   }
 }
 
 function prevVideo() {
   if (current > 0) {
     current--;
-    updateVideo();
+    updateScreen();
   }
+}
+
+function renderOption(button, option) {
+  button.innerHTML = ""; // clear button
+
+  if (option.type === "image") {
+    const img = document.createElement("img");
+    img.src = option.value;
+    img.style.width = "80%";
+    img.style.height = "80%";
+    img.style.objectFit = "contain";
+    img.style.pointerEvents = "none";
+    button.appendChild(img);
+  } else {
+    button.innerText = option.value;
+  }
+}
+
+function renderAnswers(options) {
+  answerBox.innerHTML = ""; // clear old buttons
+
+  options.forEach((option, index) => {
+    const btn = document.createElement("button");
+    btn.className = "quiz-btn";
+    btn.onclick = () => answer(index);
+
+    // support BOTH text + image
+    if (typeof option === "string") {
+      btn.innerText = option;
+    } else if (option.type === "image") {
+      const img = document.createElement("img");
+      img.src = option.value;
+      img.style.width = "80%";
+      img.style.height = "80%";
+      img.style.objectFit = "contain";
+      img.style.pointerEvents = "none";
+      btn.appendChild(img);
+    } else {
+      btn.innerText = option.value;
+    }
+
+    answerBox.appendChild(btn);
+  });
 }
 
 function closeModal() {
   modal.style.display = "none";
 }
+
+function goToBoss() {
+  window.location.href = "pisopig.html";
+}
+
 </script>
 
 </body>
