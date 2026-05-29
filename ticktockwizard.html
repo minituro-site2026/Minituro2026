@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tick Tock Wizard</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap)" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;font-family:'Poppins',sans-serif;}
@@ -39,22 +39,22 @@ body{
 
 .question{
   background:white;
-  padding:15px;
+  padding:25px 15px 15px;
   border-radius:20px;
-  margin:15px 0;
+  margin:20px 0;
   font-weight:600;
   position:relative;
 }
 
 .chat-label{
   position:absolute;
-  top:-10px;
+  top:-14px;
   left:15px;
   background:#ff7a00;
   color:white;
   padding:4px 10px;
   border-radius:12px;
-  font-size:11px;
+  font-size:13px;
   font-weight:700;
 }
 
@@ -199,6 +199,18 @@ button:active{filter:brightness(0.7);}
   width:100%;
   background:#ff7a00;
 }
+
+/* NEW: small helper for Phase 2 multiple-choice layout */
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+.choice-btn{
+  background:#0f479a;
+}
+
 </style>
 </head>
 
@@ -210,7 +222,7 @@ button:active{filter:brightness(0.7);}
 <img id="wizard" class="character" src="img/ticktockwizard.gif">
 
 <div class="question">
-  <div class="chat-label">Tick Tock Wizard</div>
+  <div class="chat-label"><span id="phaseBadge" class="phase-badge">Phase 1: Clock</span></div>
   <div id="dialogueText"></div>
 </div>
 
@@ -235,36 +247,78 @@ button:active{filter:brightness(0.7);}
 </div>
 
 <script>
-
+// -------------------- REFERENCES --------------------
 const dialogueText = document.getElementById("dialogueText");
 const gameArea = document.getElementById("gameArea");
 const popup = document.getElementById("popup");
 const popupText = document.getElementById("popupText");
 const popupButtons = document.getElementById("popupButtons");
+const phaseBadge = document.getElementById("phaseBadge");
 
+// -------------------- STATE --------------------
 let lives = 7;
 let current = 0;
 
-// FIX 1: null instead of 0 so minute "0" button works correctly
+// Phase: 1 = clock, 2 = weeks/months
+let phase = 1;
+
+// Clock selection state
 let selectedHour = null;
 let selectedMinute = null;
 let selectedPeriod = "";
 
 let hourChanged = false;
 let minuteChanged = false;
-let periodChanged = false; 
+let periodChanged = false;
 
-
+// -------------------- DATA --------------------
+// Only first 5 used for Phase 1 per your request
 const timeQuestions = [
   {hour:1, minute:0, period:"AM"},
   {hour:3, minute:30, period:"PM"},
   {hour:6, minute:15, period:"PM"},
   {hour:9, minute:45, period:"AM"},
   {hour:11, minute:30, period:"PM"},
-  {hour:8, minute:30, period:"PM"},
-  {hour:3, minute:0, period:"AM"}
+  // You had two more; we’ll stop at 5 for the first phase
 ];
 
+// Phase 2: 5 sequence questions (weeks and months)
+const phase2Questions = [
+  // Weeks (days of week) - what comes next?
+  {
+    prompt: "What comes next: Monday, Tuesday, Wednesday, ____?",
+    choices: ["Thursday","Friday","Sunday","Saturday"],
+    answer: "Thursday",
+    type: "week"
+  },
+  {
+    prompt: "What comes next: Thursday, Friday, Saturday, ____?",
+    choices: ["Monday","Sunday","Tuesday","Wednesday"],
+    answer: "Sunday",
+    type: "week"
+  },
+  // Months
+  {
+    prompt: "What comes next: January, February, March, ____?",
+    choices: ["April","May","June","July"],
+    answer: "April",
+    type: "month"
+  },
+  {
+    prompt: "What comes next: August, September, October, ____?",
+    choices: ["June","July","November","December"],
+    answer: "November",
+    type: "month"
+  },
+  {
+    prompt: "What comes next: November, December, January, ____?",
+    choices: ["February","March","October","April"],
+    answer: "February",
+    type: "month"
+  }
+];
+
+// -------------------- UI HELPERS --------------------
 function renderLives(){
   let html="";
   for(let i=0;i<lives;i++){
@@ -274,6 +328,17 @@ function renderLives(){
 }
 renderLives();
 
+function showPopup(message, buttonsHTML){
+  popupText.innerText = message;
+  popupButtons.innerHTML = buttonsHTML;
+  popup.classList.add("active");
+}
+
+function hidePopup(){
+  popup.classList.remove("active");
+}
+
+// -------------------- CLOCK PHASE --------------------
 function createClockNumbers(){
   let clock = document.querySelector(".clock");
 
@@ -298,9 +363,8 @@ function createClockNumbers(){
   }
 }
 
-function loadQuestion(){
-
-  // FIX 1: reset to null
+function loadClockQuestion(){
+  // reset selections
   selectedHour = 12;
   selectedMinute = 0;
   selectedPeriod = "";
@@ -308,37 +372,35 @@ function loadQuestion(){
   minuteChanged = false;
   periodChanged = false;
 
-  let q = timeQuestions[current];
-
-  dialogueText.innerText =
-    `Set the clock to ${q.hour}:${q.minute.toString().padStart(2,'0')} ${q.period}!`;
+  const q = timeQuestions[current];
+  phaseBadge.textContent = "TickTock Wizard";
+  dialogueText.innerText = `Set the clock to ${q.hour}:${q.minute.toString().padStart(2,'0')} ${q.period}!`;
 
   gameArea.innerHTML = `
-  <div class="clock">
-    <div class="hand hour" id="hourHand"></div>
-    <div class="hand minute" id="minuteHand"></div>
-    <div class="center-dot"></div>
-  </div>
+    <div class="clock">
+      <div class="hand hour" id="hourHand"></div>
+      <div class="hand minute" id="minuteHand"></div>
+      <div class="center-dot"></div>
+    </div>
 
-  <!-- FIX 2: each group has its own ID so clearSelected never touches the wrong group -->
-  <div class="time-buttons" id="hourBtns">
-    ${[1,2,3,4,5,6,7,8,9,10,11,12]
-      .map(n=>`<button onclick="setHour(${n},this)">${n}</button>`).join("")}
-  </div>
+    <div class="time-buttons" id="hourBtns">
+      ${[1,2,3,4,5,6,7,8,9,10,11,12]
+        .map(n=>`<button onclick="setHour(${n},this)">${n}</button>`).join("")}
+    </div>
 
-  <div class="time-buttons" id="minuteBtns">
-    ${[0,15,30,45]
-      .map(n=>`<button class="minute-btn" onclick="setMinute(${n},this)">${n}</button>`).join("")}
-  </div>
+    <div class="time-buttons" id="minuteBtns">
+      ${[0,15,30,45]
+        .map(n=>`<button class="minute-btn" onclick="setMinute(${n},this)">${n}</button>`).join("")}
+    </div>
 
-  <div class="time-buttons" id="periodBtns">
-    <button onclick="setPeriod('AM',this)">AM</button>
-    <button onclick="setPeriod('PM',this)">PM</button>
-  </div>
+    <div class="time-buttons" id="periodBtns">
+      <button onclick="setPeriod('AM',this)">AM</button>
+      <button onclick="setPeriod('PM',this)">PM</button>
+    </div>
 
-  <div style="margin-top:20px;">
-    <button class="submit-btn" onclick="submitTime()">Cast Spell ✨</button>
-  </div>
+    <div style="margin-top:20px;">
+      <button class="submit-btn" onclick="submitTime()">Cast Spell ✨</button>
+    </div>
   `;
 
   createClockNumbers();
@@ -355,7 +417,6 @@ function setHour(h, btn){
   hourChanged = true;
 
   selectedHour = h;
-  // FIX 2: use #hourBtns instead of :first-of-type
   document.querySelectorAll("#hourBtns button")
     .forEach(b => b.classList.remove("selected"));
   btn.classList.add("selected");
@@ -373,7 +434,6 @@ function setMinute(m, btn){
   minuteChanged = true;
 
   selectedMinute = m;
-  // FIX 2: use #minuteBtns instead of .minute-btn (which would also grab other pages if reused)
   document.querySelectorAll("#minuteBtns button")
     .forEach(b => b.classList.remove("selected"));
   btn.classList.add("selected");
@@ -390,14 +450,13 @@ function setPeriod(p, btn){
   periodChanged = true;
 
   selectedPeriod = p;
-  // FIX 2: use #periodBtns instead of nth-of-type(3)
   document.querySelectorAll("#periodBtns button")
     .forEach(b => b.classList.remove("selected"));
   btn.classList.add("selected");
 }
 
 function submitTime(){
-  let q = timeQuestions[current];
+  const q = timeQuestions[current];
 
   if(selectedHour === q.hour &&
      selectedMinute === q.minute &&
@@ -405,10 +464,11 @@ function submitTime(){
 
     current++;
 
+    // Finished 5 clock questions -> move to Phase 2
     if(current >= timeQuestions.length){
-      showWin();
+      startPhase2();
     }else{
-      loadQuestion();
+      loadClockQuestion();
     }
 
   }else{
@@ -416,6 +476,56 @@ function submitTime(){
   }
 }
 
+// -------------------- PHASE 2 (WEEKS & MONTHS) --------------------
+
+let phase2Index = 0;
+
+function startPhase2(){
+  phase = 2;
+  phase2Index = 0;
+
+  // ✅ CHANGE WIZARD FORM HERE
+  document.getElementById("wizard").src = "img/ticktock_finalform.gif";
+
+  // Show phase transition popup
+  showPopup(
+    "Phase 2: Weeks and Months",
+    `<button class="popup-btn" onclick="hidePopup(); loadPhase2Question();">Begin ➡️</button>`
+  );
+}
+
+function loadPhase2Question(){
+  phaseBadge.textContent = "TickTock Wizard";
+  const q = phase2Questions[phase2Index];
+
+  dialogueText.innerText = q.prompt;
+
+  const choicesHTML = q.choices.map(c => 
+    `<button class="choice-btn" onclick="submitPhase2('${c.replace(/'/g,"\\'")}')">${c}</button>`
+  ).join("");
+
+  gameArea.innerHTML = `
+    <div class="choice-grid">
+      ${choicesHTML}
+    </div>
+  `;
+}
+
+function submitPhase2(choice){
+  const q = phase2Questions[phase2Index];
+  if(choice === q.answer){
+    phase2Index++;
+    if(phase2Index >= phase2Questions.length){
+      showWin();
+    }else{
+      loadPhase2Question();
+    }
+  }else{
+    loseLife();
+  }
+}
+
+// -------------------- LIFE / END STATES --------------------
 function loseLife(){
   lives--;
   renderLives();
@@ -446,8 +556,16 @@ function showWin(){
   popup.classList.add("active");
 }
 
-loadQuestion();
+// -------------------- INIT --------------------
+function init(){
+  phase = 1;
+  current = 0;
+  lives = 7;
+  renderLives();
+  loadClockQuestion();
+}
 
+init();
 </script>
 </body>
 </html>
