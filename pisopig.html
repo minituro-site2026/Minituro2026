@@ -227,6 +227,8 @@ Sir Piso Pig's Balance: ₱100
 </div>
 
 <script>
+let phase2Started = false;
+
 let balance = 100;
 let lives = 10;
 let index = 0;
@@ -253,6 +255,13 @@ function loadQuestion(){
         document.getElementById("balance").style.display="block";
         document.getElementById("balance").innerText=
         "Sir Piso Pig's Balance: ₱"+balance;
+
+        // 👇 SHOW PHASE 2 POPUP ONLY ONCE
+        if(!phase2Started){
+            phase2Started = true;
+            showPhase2Popup();
+        }
+
     } else {
         document.getElementById("balance").style.display="none";
     }
@@ -293,6 +302,20 @@ function submit(){
             showGameOver();
         }
     }
+}
+
+function showPhase2Popup(){
+    document.getElementById("overlay").style.display="flex";
+    document.getElementById("popupContent").innerHTML=`
+        <h2>💸 Phase 2: <br>Spending Time!</h2>
+        <p> <b>Spend Sir Piso Pig's Money!</b><br>
+        Use the power of subtraction!</p>
+        <button onclick="closePopup()">Let's Go!</button>
+    `;
+}
+
+function closePopup(){
+    document.getElementById("overlay").style.display="none";
 }
 
 function showGameOver(){
