@@ -27,8 +27,9 @@ body{
 
 /* Phone Container */
 .phone{
-  width:390px;
-  height:844px;
+  width:100%;
+  max-width:390px;
+  min-height:100vh;
   background:#fff9ed;
   display:flex;
   flex-direction:column;
@@ -293,6 +294,42 @@ align-items: center;
 }
 
 .btn-secondary:hover { color: #F57C2C; }
+
+/* iPad / Tablet */
+@media (min-width: 768px){
+
+  .phone{
+    max-width: 700px;
+    padding: 50px;
+  }
+
+  .logo{
+    width:220px;
+  }
+
+  .bitsy{
+    width:320px;
+    margin:50px 0;
+  }
+
+  .greeting{
+    font-size:36px;
+  }
+
+  .btn-main{
+    max-width:400px;
+    font-size:24px;
+    padding:22px;
+  }
+
+  .landing-popup{
+    width:500px;
+  }
+
+  .popup-box{
+    width:450px;
+  }
+}
 
 </style>
 </head>
