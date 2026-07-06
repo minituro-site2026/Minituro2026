@@ -54,6 +54,8 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 25px;
   padding: 10px 25px;
+  max-width:500px;
+  margin:0 auto;
   text-align: center;
 }
 
@@ -156,26 +158,75 @@ a {
   text-decoration: underline;
 }
 
-/* Tablet / iPad */
+/* ===========================
+   iPad / Tablet
+=========================== */
+
 @media screen and (min-width:768px){
 
+    /* Main container */
     .phone{
         width:100%;
         max-width:768px;
     }
 
+    /* Logo */
+    .logo{
+        width:180px;
+        margin-top:35px;
+    }
+
+    /* Heading */
+    .tagline{
+        font-size:32px;
+        margin:20px 0 35px;
+    }
+
+    /* Grid */
+    .grid{
+        grid-template-columns:repeat(2,230px);
+        justify-content:center;
+        gap:40px;
+    }
+
+    /* Lesson title */
+    .item h3{
+        font-size:24px;
+        line-height:30px;
+        min-height:70px;
+    }
+
+    /* Lesson circle */
+    .circle{
+        width:180px;
+        height:180px;
+        border-width:8px;
+    }
+
+    /* GIF */
+    .icons{
+        width:120px;
+    }
+
+    /* Lesson count */
+    .bites{
+        font-size:18px;
+    }
+
+    /* Footer */
     .nav{
-        max-width:768px;
+        max-width:868px;
         height:95px;
     }
 
     .footercons{
-        width:34px;
+        width:36px;
     }
 
     .nav-item{
         font-size:16px;
     }
+
 }
 
 </style>
