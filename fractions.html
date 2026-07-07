@@ -25,6 +25,7 @@ body {
 /* Phone container */
 .phone {
   width: 390px;
+  max-width: 390px;
   min-height: 100vh;
   background: #fff6e8;
   display: flex;
@@ -67,24 +68,26 @@ body {
 
 /* 2 buttons = side by side */
 .quiz-btn {
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   border-radius: 20px;
   background: #ff8c3a;
   color: white;
   border: none;
   font-weight: 700;
+  font-size: 17px;
 }
 
 /* 4 buttons = grid look */
 #answerBox .quiz-btn {
   flex: 1 1 40%; /* auto grid */
-  max-width: 140px;
+  max-width: 150px;
 }
 
 /* Caption */
 .caption {
   margin-top: 12px;
+  font-size: 17px;
 }
 
 /* Controls */
@@ -100,10 +103,11 @@ button {
   background:#ff8c3a;
   border: none;
   color: white;
-  padding: 6px 12px;
+  padding: 8px 16px;
   margin-bottom: 10px;
   border-radius: 10px;
   font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
   position: sticky;
 }
@@ -112,12 +116,15 @@ button {
 .nav {
   position: fixed;
   bottom: 0;
-  width: 390px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 390px;
   height: 80px;
   background: #ff8c3a;
   display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .nav-item {
@@ -138,11 +145,11 @@ button {
 /* Modal */
 .modal {
   display: none;
-  position: fixed; /* 🔥 change this */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;  /* 🔥 full viewport */
-  height: 100vh; /* 🔥 full viewport */
+  width: 100vw;
+  height: 100vh;
   background: rgba(0,0,0,0.6);
   justify-content: center;
   align-items: center;
@@ -157,16 +164,21 @@ button {
   text-align:center;
 }
 
+.modal-content p {
+  font-size: 17px;
+}
+
 .modal-buttons {
   display: flex;
   gap: 10px;
   width: 100%;
+  margin-top: 16px;
 }
 
 .modal-buttons button {
   flex: 1;
-  padding: 12px;
-  font-size: 14px;
+  padding: 14px;
+  font-size: 15px;
 }
 
 .back-btn {
@@ -179,6 +191,93 @@ button {
   flex: 1;
   background: #ff6122;
   color: white;
+}
+
+/* ===========================
+   iPad / Tablet
+=========================== */
+
+@media screen and (min-width:768px){
+
+  /* Main container: keep it centered, don't stretch full width */
+  .phone{
+    width: 500px;
+    max-width: 500px;
+  }
+
+  /* Logo */
+  .logo{
+    width: 160px;
+  }
+
+  /* Caption */
+  .caption{
+    font-size: 20px;
+    margin-top: 16px;
+  }
+
+  /* Quiz answer buttons */
+  .quiz-btn{
+    width: 140px;
+    height: 140px;
+    border-radius: 24px;
+    font-size: 20px;
+  }
+
+  #answerBox .quiz-btn{
+    max-width: 180px;
+  }
+
+  #answerBox{
+    gap: 18px;
+  }
+
+  /* Back / Next controls */
+  .controls{
+    margin-top: 22px;
+    padding: 0 30px;
+  }
+
+  .controls button{
+    padding: 12px 22px;
+    font-size: 18px;
+    border-radius: 14px;
+  }
+
+  /* Modal */
+  .modal-content{
+    width: 70%;
+    max-width: 420px;
+    padding: 40px;
+  }
+
+  .modal-content p{
+    font-size: 20px;
+  }
+
+  .modal-buttons button{
+    padding: 16px;
+    font-size: 18px;
+  }
+
+  /* Footer nav */
+  .nav{
+    max-width: 700px;
+    height: 100px;
+    font-size: 18px;
+    justify-content: space-evenly;
+  }
+
+  .nav-item{
+    flex: 0 1 auto;
+    padding: 0 40px;
+  }
+
+  .footercons{
+    width: 34px;
+    margin-bottom: 8px;
+  }
+
 }
 
 </style>
@@ -273,9 +372,6 @@ const player = document.getElementById("videoPlayer");
 const caption = document.getElementById("captionText");
 const answerBox = document.getElementById("answerBox");
 
-const opt0 = document.getElementById("opt0");
-const opt1 = document.getElementById("opt1");
-
 const modal = document.getElementById("gameModal");
 
 function updateScreen() {
@@ -284,7 +380,6 @@ function updateScreen() {
   player.src = item.url;
   caption.innerText = item.caption;
 
-  // ✅ ADD THIS HERE
   if (item.type === "video") {
     player.play();   // autoplay lessons
   } else {
@@ -331,22 +426,6 @@ function prevVideo() {
   if (current > 0) {
     current--;
     updateScreen();
-  }
-}
-
-function renderOption(button, option) {
-  button.innerHTML = ""; // clear button
-
-  if (option.type === "image") {
-    const img = document.createElement("img");
-    img.src = option.value;
-    img.style.width = "80%";
-    img.style.height = "80%";
-    img.style.objectFit = "contain";
-    img.style.pointerEvents = "none";
-    button.appendChild(img);
-  } else {
-    button.innerText = option.value;
   }
 }
 
