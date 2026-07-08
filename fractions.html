@@ -432,7 +432,7 @@ padding:8px 14px;
     id="videoPlayer"
     autoplay
     muted
-    playsinline>
+    playsinline controls>
     <source src="img/videos/V1_MP4_INTRO.mp4" type="video/mp4">
     </video>
 
@@ -523,7 +523,6 @@ const player = document.getElementById("videoPlayer");
 const caption = document.getElementById("captionText");
 const answerBox = document.getElementById("answerBox");
 const answerBtn = document.getElementById("answerBtn");
-
 const modal = document.getElementById("gameModal");
 
 function updateScreen() {
@@ -533,7 +532,7 @@ function updateScreen() {
   caption.innerText = item.caption;
 
 player.load();
-player.muted = true;        // required for autoplay on most browsers
+player.muted = false;        // required for autoplay on most browsers
 player.playsInline = true;  // iPhone support
 
 player.play().catch(err => {
@@ -548,7 +547,7 @@ player.play().catch(err => {
   } else {
 
     player.load();
-    player.muted = true;
+    player.muted = false;
     player.playsInline = true;
 
     player.play().catch(err => {
