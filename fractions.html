@@ -23,16 +23,18 @@ body {
 }
 
 /* Phone container */
-.phone {
-  width: 390px;
-  max-width: 390px;
-  min-height: 100vh;
-  background: #fff6e8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 80px;
-  overflow-y: auto;
+.phone{
+  width:100%;
+  max-width:430px;
+  min-height:100vh;
+  background:#fff6e8;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  margin:0 auto;
+  padding:20px 16px 90px;
 }
 
 /* Logo */
@@ -43,39 +45,73 @@ body {
 }
 
 /* Video wrapper */
-.video-wrapper {
-  position: relative;
-  margin-top: 20px;
-  width: 100%;
+.video-wrapper{
+    width:100%;
+    max-width:100%;
+    position:relative;
+    overflow:hidden;
+    border-radius:22px;
 }
 
-.video-wrapper video {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+.video-wrapper video{
+    width:100%;
+    display:block;
+    border-radius:22px;
 }
 
 /* Answer buttons overlay */
-#answerBox {
-  position: sticky;
-  bottom: -220px;
-  width: 100%;
-  display: none;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap; /* THIS is important */
+#answerBox{
+    position:absolute;
+    bottom:90px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:90%;
+
+    display:none;
+    flex-direction:column;
+    align-items:center;
+
+    gap:12px;
+
+    z-index:20;
+}
+
+#choices{
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+
+    gap:12px;
 }
 
 /* 2 buttons = side by side */
-.quiz-btn {
-  width: 110px;
-  height: 110px;
-  border-radius: 20px;
-  background: #ff8c3a;
-  color: white;
-  border: none;
-  font-weight: 700;
-  font-size: 17px;
+.quiz-btn{
+
+flex:1 1 calc(50% - 12px);
+
+max-width:170px;
+min-width:120px;
+
+aspect-ratio:1;
+
+border:none;
+border-radius:20px;
+background:#ff8c3a;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:10px;
+}
+
+.quiz-btn img{
+width:80%;
+height:80%;
+object-fit:contain;
 }
 
 /* 4 buttons = grid look */
@@ -84,19 +120,71 @@ body {
   max-width: 150px;
 }
 
-/* Caption */
-.caption {
-  margin-top: 12px;
-  font-size: 17px;
+/* Cancel (X) button — sits below the answer choices */
+#cancelAnswerBtn{
+
+    width:36px;
+    height:36px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#00000080;
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:6px;
+
 }
 
-/* Controls */
-.controls {
-  width: 100%;
-  margin-top: 16px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
+/* Caption */
+.caption{
+
+width:100%;
+text-align:center;
+color:#ff8c3a;
+
+font-size:18px;
+font-weight:600;
+
+margin:20px 0;
+
+padding:0 10px;
+
+}
+
+/* Controls - now an overlay near the bottom of the video */
+.controls{
+
+position:absolute;
+
+left:0;
+right:0;
+bottom:20px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:0 20px;
+
+gap: 30px;
+
+
+}
+
+.controls button{
+
+padding:12px 18px;
+
+font-size:16px;
+
+border-radius:14px;
+
 }
 
 button {
@@ -112,19 +200,48 @@ button {
   position: sticky;
 }
 
+/* Answer button — sits between Back and Next, bounces gently to draw the eye */
+#answerBtn{
+  position: static;      /* overrides the "sticky" from the generic button rule */
+  margin-bottom: 0;
+  z-index: 11;
+}
+
+@keyframes answerBounce{
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+#answerBtn.bounce{
+  animation: answerBounce 1.1s ease-in-out infinite;
+}
+
+/* Pause the bounce on press/hover so it feels responsive, not jittery */
+#answerBtn.bounce:active{
+  animation-play-state: paused;
+  transform: translateY(0);
+}
+
 /* Bottom nav */
-.nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 390px;
-  height: 80px;
-  background: #ff8c3a;
-  display: flex;
-  align-items: center;
-  font-size: 15px;
+.nav{
+
+position:fixed;
+bottom:0;
+left:0;
+
+width:100%;
+height:78px;
+
+background:#ff8c3a;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+gap:70px;
+
+z-index:100;
+
 }
 
 .nav-item {
@@ -158,7 +275,7 @@ button {
 
 .modal-content {
   background: white;
-  width:85%;
+  width:min(90%,430px);
   border-radius:28px;
   padding:30px;
   text-align:center;
@@ -193,17 +310,42 @@ button {
   color: white;
 }
 
+/* SMALL PHONE 8*/
+
+@media (max-width:400px){
+
+.logo{
+width:42%;
+}
+
+.quiz-btn{
+min-width:100px;
+}
+
+.caption{
+font-size:16px;
+}
+
+.controls button{
+
+font-size:14px;
+padding:8px 14px;
+
+}
+
+}
+
+
 /* ===========================
    iPad / Tablet
 =========================== */
 
-@media screen and (min-width:768px){
+@media (min-width:768px){
 
-  /* Main container: keep it centered, don't stretch full width */
-  .phone{
-    width: 500px;
-    max-width: 500px;
-  }
+.phone{
+    max-width:650px;
+    padding:30px 25px 110px;
+}
 
   /* Logo */
   .logo{
@@ -212,16 +354,14 @@ button {
 
   /* Caption */
   .caption{
-    font-size: 20px;
-    margin-top: 16px;
+  font-size:24px;
   }
 
   /* Quiz answer buttons */
   .quiz-btn{
-    width: 140px;
-    height: 140px;
-    border-radius: 24px;
-    font-size: 20px;
+    max-width:220px;
+    min-width:180px;
+
   }
 
   #answerBox .quiz-btn{
@@ -229,24 +369,24 @@ button {
   }
 
   #answerBox{
-    gap: 18px;
+    bottom: 90px;
   }
 
   /* Back / Next controls */
   .controls{
-    margin-top: 22px;
+    bottom: 16px;
     padding: 0 30px;
   }
 
   .controls button{
-    padding: 12px 22px;
-    font-size: 18px;
-    border-radius: 14px;
+
+  font-size:18px;
+  padding:14px 22px;
   }
 
   /* Modal */
   .modal-content{
-    width: 70%;
+    width:min(480px,70%);
     max-width: 420px;
     padding: 40px;
   }
@@ -262,11 +402,11 @@ button {
 
   /* Footer nav */
   .nav{
-    max-width: 700px;
-    height: 100px;
-    font-size: 18px;
-    justify-content: space-evenly;
-  }
+
+  height:90px;
+  gap:120px;
+
+  } 
 
   .nav-item{
     flex: 0 1 auto;
@@ -275,7 +415,6 @@ button {
 
   .footercons{
     width: 34px;
-    margin-bottom: 8px;
   }
 
 }
@@ -287,31 +426,43 @@ button {
 
 <div class="phone">
 
-  <img src="img/minituro.png" class="logo">
 
   <div class="video-wrapper">
-    <video id="videoPlayer" controls>
-      <source src="img/videos/V1_MP4_INTRO.mp4" type="video/mp4">
+    <video
+    id="videoPlayer"
+    autoplay
+    muted
+    playsinline>
+    <source src="img/videos/V1_MP4_INTRO.mp4" type="video/mp4">
     </video>
 
     <!-- ANSWER BUTTONS -->
     <div id="answerBox">
+
+    <div id="choices"></div>
+
+    <button id="cancelAnswerBtn" onclick="hideAnswers()">✕</button>
+
+    </div>
+
+    <!-- BACK / NEXT overlay near bottom of video -->
+    <div class="controls">
+      <button onclick="prevVideo()">Back</button>
+      <button id="answerBtn" onclick="showAnswers()" style="display:none;">
+        Answer
+      </button>
+      <button onclick="nextVideo()">Next</button>
     </div>
   </div>
 
   <div class="caption" id="captionText">
-    🍕 Meet Fractions!
-  </div>
-
-  <div class="controls">
-    <button onclick="prevVideo()">Back</button>
-    <button onclick="nextVideo()">Next</button>
+     Meet Fractions!
   </div>
 
   <!-- MODAL -->
   <div class="modal" id="gameModal">
     <div class="modal-content">
-  <p>🎮 Are you ready for a challenge?</p>
+  <p> Are you ready for a challenge?</p>
 
   <div class="modal-buttons">
     <button class="back-btn" onclick="closeModal()">Back</button>
@@ -336,7 +487,7 @@ button {
 <script>
 
 const sequence = [
-  { type: "video", url: "img/videos/V1_MP4_INTRO.mp4", caption: "🍕 Meet Fractions!" },
+  { type: "video", url: "img/videos/V1_MP4_INTRO.mp4", caption: "Meet Fractions!" },
 
   {
   type: "quiz",
@@ -349,7 +500,7 @@ const sequence = [
   correct: 1
 },
 
-  { type: "video", url: "img/videos/V3_MP4_ONEFOURTH.mp4", caption: "🍕 What is 1/4?" },
+  { type: "video", url: "img/videos/V3_MP4_ONEFOURTH.mp4", caption: "What is 1/4?" },
 
   { 
     type: "quiz",
@@ -363,7 +514,7 @@ const sequence = [
     correct: 0
   },
 
-  { type: "video", url: "img/videos/V5_MP4_SONG.mp4", caption: "🍕 1/2 vs 1/4?" }
+  { type: "video", url: "img/videos/V5_MP4_SONG.mp4", caption: "1/2 vs 1/4?" }
 ];
 
 let current = 0;
@@ -371,6 +522,7 @@ let current = 0;
 const player = document.getElementById("videoPlayer");
 const caption = document.getElementById("captionText");
 const answerBox = document.getElementById("answerBox");
+const answerBtn = document.getElementById("answerBtn");
 
 const modal = document.getElementById("gameModal");
 
@@ -380,18 +532,50 @@ function updateScreen() {
   player.src = item.url;
   caption.innerText = item.caption;
 
+player.load();
+player.muted = true;        // required for autoplay on most browsers
+player.playsInline = true;  // iPhone support
+
+player.play().catch(err => {
+    console.log("Autoplay blocked:", err);
+});
+
   if (item.type === "video") {
     player.play();   // autoplay lessons
-  } else {
-    player.pause();  // pause quizzes
-  }
-
-  if (item.type === "quiz") {
-    answerBox.style.display = "flex";
-    renderAnswers(item.options);
-  } else {
     answerBox.style.display = "none";
+    answerBtn.style.display = "none";
+    answerBtn.classList.remove("bounce");
+  } else {
+
+    player.load();
+    player.muted = true;
+    player.playsInline = true;
+
+    player.play().catch(err => {
+        console.log(err);
+    });
+
+    renderAnswers(item.options);
+    answerBox.style.display = "none";
+
+    // Show Answer button immediately
+    answerBtn.style.display = "inline-block";
+    answerBtn.classList.add("bounce");
   }
+}
+
+// Reveal the answer choices, hide the Answer button
+function showAnswers() {
+  answerBox.style.display = "flex";
+  answerBtn.style.display = "none";
+  answerBtn.classList.remove("bounce");
+}
+
+// Cancel out of the answer choices, bring back the bouncing Answer button
+function hideAnswers() {
+  answerBox.style.display = "none";
+  answerBtn.style.display = "inline-block";
+  answerBtn.classList.add("bounce");
 }
 
 function answer(choice) {
@@ -430,30 +614,39 @@ function prevVideo() {
 }
 
 function renderAnswers(options) {
-  answerBox.innerHTML = ""; // clear old buttons
 
-  options.forEach((option, index) => {
-    const btn = document.createElement("button");
-    btn.className = "quiz-btn";
-    btn.onclick = () => answer(index);
+    const choices = document.getElementById("choices");
+    choices.innerHTML = "";
 
-    // support BOTH text + image
-    if (typeof option === "string") {
-      btn.innerText = option;
-    } else if (option.type === "image") {
-      const img = document.createElement("img");
-      img.src = option.value;
-      img.style.width = "80%";
-      img.style.height = "80%";
-      img.style.objectFit = "contain";
-      img.style.pointerEvents = "none";
-      btn.appendChild(img);
-    } else {
-      btn.innerText = option.value;
-    }
+    options.forEach((option, index) => {
 
-    answerBox.appendChild(btn);
-  });
+        const btn = document.createElement("button");
+        btn.className = "quiz-btn";
+        btn.onclick = () => answer(index);
+
+        if (typeof option === "string") {
+            btn.innerText = option;
+
+        } else if (option.type === "image") {
+
+            const img = document.createElement("img");
+            img.src = option.value;
+            img.style.width = "80%";
+            img.style.height = "80%";
+            img.style.objectFit = "contain";
+
+            btn.appendChild(img);
+
+        } else {
+
+            btn.innerText = option.value;
+
+        }
+
+        choices.appendChild(btn);
+
+    });
+
 }
 
 function closeModal() {
@@ -463,6 +656,8 @@ function closeModal() {
 function goToBoss() {
   window.location.href = "boss.html";
 }
+
+updateScreen();
 
 </script>
 
