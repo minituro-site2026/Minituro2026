@@ -16,14 +16,16 @@ body{
   justify-content:center;
 }
 
-.mobile-wrapper{
-  width:100%;
-  max-width:420px;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  position:relative;
-  background:#f4efe6;
+.phone{
+    width:100%;
+    max-width:430px;
+    min-height:100vh;
+    background:#fff6e8;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin:0 auto;
+    padding:20px 16px 90px;
 }
 
 .content{
@@ -59,8 +61,8 @@ body{
 }
 
 .clock{
-  width:240px;
-  height:240px;
+  width:min(240px,70vw);
+  height:min(240px,70vw);
   border:6px solid #333;
   border-radius:50%;
   margin:15px auto;
@@ -211,6 +213,51 @@ button:active{filter:brightness(0.7);}
   background:#0f479a;
 }
 
+.nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:78px;
+    background:#ff8c3a;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:70px;
+
+    z-index:100;
+}
+
+.nav-item{
+    flex:1;
+    text-decoration:none;
+    color:white;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    font-family:"Poppins", sans-serif;
+    font-size:12px;
+    font-weight:500;
+}
+
+.nav-item span{
+    font-family: "Poppins", sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+
+.footercons{
+    width:26px;
+    height:26px;
+    object-fit:contain;
+    margin-bottom:6px;
+}
+
 </style>
 </head>
 
@@ -218,7 +265,6 @@ button:active{filter:brightness(0.7);}
 <div class="mobile-wrapper">
 <div class="content">
 
-<img src="img/minituro.png" class="logo">
 <img id="wizard" class="character" src="img/ticktockwizard.gif">
 
 <div class="question">
@@ -233,10 +279,16 @@ button:active{filter:brightness(0.7);}
 
 </div>
 
-<div class="footer">
-  <a href="home.html"><img src="img/home.png">Home</a>
-  <a href="info.html"><img src="img/info.png">Info</a>
-</div>
+<div class="nav">
+    <a href="home.html" class="nav-item">
+        <img src="img/home.png" class="footercons">
+        <span 1>Home</span>
+    </a>
+
+    <a href="info.html" class="nav-item">
+        <img src="img/info.png" class="footercons">
+        <span 1>Info</span>
+    </a>
 </div>
 
 <div id="popup" class="popup-overlay">

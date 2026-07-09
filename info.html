@@ -16,16 +16,28 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
-    font-family: 'Nunito', sans-serif;
-    color: var(--text-dark);
-    background: var(--orange);
-    overflow-x: hidden;
-    width: 100%;
-    max-width: 430px;
-    margin: 0 auto;
-    min-height: 100vh;
+  body{
+    font-family:'Nunito',sans-serif;
+    color:var(--text-dark);
+    background:var(--orange);
+    overflow-x:hidden;
+
+    display:flex;
+    justify-content:center;
   }
+
+  .phone{
+    width:100%;
+    max-width:430px;
+    min-height:100vh;
+    background:#fff8ee;
+
+    display:flex;
+    flex-direction:column;
+
+    margin:0 auto;
+    position:relative;
+}
 
   .section-orange {
     background: var(--orange);
@@ -225,22 +237,41 @@
   .wave-divider svg { display: block; width: 100%; }
 
   /* ---- FOOTER (matches Tick Tock Wizard) ---- */
-  .footer {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 430px;
-    height: 80px;
-    background: #ff8c3a;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    z-index: 100;
+  .footer{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:100%;
+    max-width:430px;
+    height:78px;
+
+    background:#ff8c3a;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:70px;
+
+    z-index:100;
   }
+
+  .footer a{
+    flex:1;
+
+    text-decoration:none;
+    color:white;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    font-family:'Poppins',sans-serif;
+    font-size:12px;
+    font-weight:600;
+}
 
   .footer a {
     text-decoration: none;
@@ -264,7 +295,12 @@
 
   .footer-spacer { height: 100px; }
 
-  .footer img{width:28px;margin-bottom:4px;}
+  .footer img{
+    width:26px;
+    height:26px;
+    object-fit:contain;
+    margin-bottom:4px;
+}
 
 
   @keyframes fadeUp {
@@ -274,9 +310,152 @@
 
   .section-orange h1 { animation: fadeUp 0.6s ease both; }
   .section-orange p  { animation: fadeUp 0.6s 0.15s ease both; }
+
+  /* ===========================
+   Small Phones
+=========================== */
+
+@media (max-width:400px){
+
+.section-orange{
+    padding:42px 18px;
+}
+
+.section-cream{
+    padding:42px 18px;
+}
+
+.section-orange h1{
+    font-size:2.2rem;
+}
+
+.section-cream h2{
+    font-size:1.7rem;
+}
+
+.card{
+    padding:20px;
+}
+
+.card-icon{
+    width:48px;
+    height:48px;
+    font-size:1.5rem;
+}
+
+.card-body h3{
+    font-size:1rem;
+}
+
+.card-body p{
+    font-size:.85rem;
+}
+
+.footer{
+    height:74px;
+}
+
+.footer img{
+    width:22px;
+    height:22px;
+}
+
+.footer a{
+    font-size:11px;
+}
+
+}
+
+
+/* ===========================
+   iPad / Tablets
+=========================== */
+
+@media (min-width:768px){
+
+.phone{
+    max-width:650px;
+}
+
+.section-orange{
+    padding:70px 45px;
+}
+
+.section-cream{
+    padding:70px 45px;
+}
+
+.section-orange h1{
+    font-size:3.6rem;
+}
+
+.section-orange p{
+    font-size:1.25rem;
+}
+
+.section-cream h2{
+    font-size:2.8rem;
+}
+
+.card{
+    padding:36px;
+    border-radius:28px;
+}
+
+.card-icon{
+    width:72px;
+    height:72px;
+    font-size:2.4rem;
+}
+
+.card-body h3{
+    font-size:1.6rem;
+}
+
+.card-body p{
+    font-size:1.1rem;
+}
+
+.audience-card{
+    padding:30px;
+}
+
+.audience-card h3{
+    font-size:1.5rem;
+}
+
+.audience-card p{
+    font-size:1.05rem;
+}
+
+.contact-item{
+    padding:24px;
+}
+
+.contact-value{
+    font-size:1.15rem;
+}
+
+.footer{
+    max-width:650px;
+    height:90px;
+}
+
+.footer img{
+    width:34px;
+    height:34px;
+}
+
+.footer a{
+    font-size:16px;
+}
+
+}
 </style>
 </head>
 <body>
+
+<div class="phone">
 
 <!-- ABOUT US -->
 <section class="section-orange">
@@ -391,6 +570,8 @@
     <div class="nav-icon"><img src="img/info.png"></div>
     Info
   </a>
+</div>
+
 </div>
 
 </body>
