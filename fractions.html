@@ -419,17 +419,6 @@ padding:8px 14px;
 
 }
 
-video::-webkit-media-controls,
-video::-webkit-media-controls-enclosure,
-video::-webkit-media-controls-panel,
-video::-webkit-media-controls-play-button,
-video::-webkit-media-controls-start-playback-button {
-  display: none !important;
-  -webkit-appearance: none;
-  opacity: 0 !important;
-  pointer-events: none;
-}
-
 </style>
 </head>
 
@@ -440,17 +429,12 @@ video::-webkit-media-controls-start-playback-button {
 
   <div class="video-wrapper">
     <video
-  id="videoPlayer"
-  autoplay
-  muted
-  playsinline
-  webkit-playsinline
-  disablePictureInPicture
-  disableRemotePlayback
-  x-webkit-airplay="deny"
-  controlsList="nofullscreen noremoteplayback nodownload">
-  <source src="img/videos/V1_MP4_INTRO.mp4" type="video/mp4">
-</video>
+    id="videoPlayer"
+    autoplay
+    muted
+    playsinline controls>
+    <source src="img/videos/V1_MP4_INTRO.mp4" type="video/mp4">
+    </video>
 
     <!-- ANSWER BUTTONS -->
     <div id="answerBox">
